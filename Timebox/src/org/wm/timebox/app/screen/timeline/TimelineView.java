@@ -20,11 +20,11 @@ public class TimelineView extends View<DataEntryContext<ObservableList<TimelineI
 	private void initControls() {
 		cTimelineTable.setItems(getController().getModel().getModel());
 
-		TableColumn<TimelineItemVO, String> tempColumn = new TableColumn<>("Start");
+		TableColumn<TimelineItemVO, String> tempColumn = new TableColumn<TimelineItemVO, String>("Start");
 		tempColumn.setCellValueFactory(new PropertyValueFactory<TimelineItemVO, String>("start"));
 		cTimelineTable.getColumns().add(tempColumn);
 
-		tempColumn = new TableColumn<>("End");
+		tempColumn = new TableColumn<TimelineItemVO, String>("End");
 		tempColumn.setCellValueFactory(new PropertyValueFactory<TimelineItemVO, String>("end"));
 		cTimelineTable.getColumns().add(tempColumn);
 

@@ -25,7 +25,7 @@ public class EventSupport<T> {
 	}
 
 	public void fire(T anEvent) {
-		List<Observer<T>> tempListeners = new ArrayList<>(listeners);
+		List<Observer<T>> tempListeners = new ArrayList<Observer<T>>(listeners);
 		for (Observer<T> tempListener : tempListeners) {
 			tempListener.notify(anEvent);
 		}

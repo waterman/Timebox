@@ -7,8 +7,6 @@ package org.wm.timebox.app;
 import java.util.logging.LogManager;
 
 import javafx.application.Application;
-import javafx.application.ConditionalFeature;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;

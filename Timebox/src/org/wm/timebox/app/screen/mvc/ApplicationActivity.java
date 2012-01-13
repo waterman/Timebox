@@ -2,6 +2,7 @@ package org.wm.timebox.app.screen.mvc;
 
 public class ApplicationActivity<T> {
 
+	
 	private Controller<T> controller;
 	private View<T> view;
 

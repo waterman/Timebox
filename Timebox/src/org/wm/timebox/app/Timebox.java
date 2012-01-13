@@ -151,7 +151,7 @@ public class Timebox extends Application {
 	}
 
 	private World initDI() {
-		ApplicationContext tempContext = new ClassPathXmlApplicationContext(new String[] { "spring.xml" });
+		ApplicationContext tempContext = new ClassPathXmlApplicationContext(new String[] { "timebox.xml" });
 		World tempBean = (World) tempContext.getBean("world");
 		return tempBean;
 	}

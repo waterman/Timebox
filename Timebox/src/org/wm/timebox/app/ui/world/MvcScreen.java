@@ -1,16 +1,16 @@
 package org.wm.timebox.app.ui.world;
 
-import org.wm.timebox.app.screen.mvc.Activity;
+import org.wm.timebox.app.screen.mvc.ApplicationActivity;
 
 public class MvcScreen extends Screen {
 
-	private Activity activity;
+	private ApplicationActivity activity;
 
-	public void setActivity(Activity aActivity) {
+	public void setActivity(ApplicationActivity aActivity) {
 		activity = aActivity;
 	}
 
-	public Activity getActivity() {
+	public ApplicationActivity getActivity() {
 		return activity;
 	}
 

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 13.01.2012 10:57:41 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="org.wm.timebox.app.bo.TimelineItem" table="TIMELINEITEM">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <one-to-one name="customer" class="org.wm.timebox.app.bo.Customer" access="field"></one-to-one>
+        <one-to-one name="project" class="org.wm.timebox.app.bo.Project" access="field"></one-to-one>
+        <property name="from" type="java.sql.Date">
+            <column name="FROM" />
+        </property>
+        <property name="until" type="java.sql.Date">
+            <column name="UNTIL" />
+        </property>
+        <property name="pauseInMinutes" type="java.lang.Integer">
+            <column name="PAUSEINMINUTES" />
+        </property>
+        <property name="summary" type="java.lang.String">
+            <column name="SUMMARY" />
+        </property>
+    </class>
+</hibernate-mapping>

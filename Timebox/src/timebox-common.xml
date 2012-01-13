@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<bean id="beanProvider" class="org.wm.timebox.di.BeanProvider"
+		scope="singleton" lazy-init="false" destroy-method="destroy">
+	</bean>
+	
+	<!-- MVC -->
+	<bean id="activity" class="org.wm.timebox.app.screen.mvc.ApplicationActivity" abstract="true" init-method="init"></bean>
+	
+	<bean id="headerPanel" class="org.wm.timebox.app.ui.world.HeaderPanel" scope="prototype"/>
+	
+	<bean id="view" class="org.wm.timebox.app.screen.mvc.View" abstract="true">
+		<property name="headerPanel" ref="headerPanel"></property>
+	</bean>
+	
+	<bean id="controller" class="org.wm.timebox.app.screen.mvc.Controller" abstract="true"></bean>
+
+	<!-- DAO / Services -->
+
+	<!-- Persistence -->	
+	<bean
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+	<bean id="timelineDAOService" class="org.wm.timebox.service.TimeboxDAOServiceImpl">
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<aop:config>
+		<aop:pointcut id="timeboxServiceMethods"
+			expression="execution(* org.wm.timebox.service.TimeboxDAOService.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="timeboxServiceMethods" />
+	</aop:config>
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- <tx:method name="increasePrice*" propagation="REQUIRED" /> <tx:method 
+				name="someOtherBusinessMethod" propagation="REQUIRES_NEW" /> -->
+			<tx:method name="*" propagation="REQUIRED" read-only="false" />
+		</tx:attributes>
+	</tx:advice>
+	<!-- Screens & Activities -->
+
+	<bean id="timelineScreen" class="org.wm.timebox.app.screen.timeline.TimelineScreen"
+		init-method="init">
+		<property name="activity">
+			<bean class="org.wm.timebox.app.screen.mvc.ApplicationActivity" parent="activity">
+				<property name="controller">
+					<bean class="org.wm.timebox.app.screen.timeline.TimelineController" parent="controller" />
+				</property>
+				<property name="view">
+					<bean class="org.wm.timebox.app.screen.timeline.TimelineView" parent="view"/>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+
+
+</beans>

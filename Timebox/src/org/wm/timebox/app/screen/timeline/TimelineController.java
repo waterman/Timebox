@@ -11,6 +11,7 @@ import org.wm.timebox.app.screen.mvc.DataEntryContext;
 
 public class TimelineController extends Controller<DataEntryContext<ObservableList<TimelineItemVO>>> {
 
+	
 	public TimelineController() {
 		super();
 	}

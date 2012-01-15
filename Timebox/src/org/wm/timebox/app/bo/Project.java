@@ -7,6 +7,14 @@ import javax.persistence.Id;
 @Entity
 public class Project {
 
+	public Project(){
+		super();
+	}
+	
+	public Project(String aName){
+		setName(aName);
+	}
+	
 	@Id
 	@GeneratedValue(generator = "globalId")
 	private Long id;

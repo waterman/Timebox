@@ -8,6 +8,18 @@
 		scope="singleton" lazy-init="false" destroy-method="destroy">
 	</bean>
 	
+	<bean id="application" class="org.wm.timebox.app.Application" init-method="init">
+		<property name="timeboxModel" ref="timeboxModel"/>
+		<property name="timeboxService" ref="timeboxDAOService"/>
+		<property name="world" ref="world"></property>
+		<property name="timelineScreen" ref="timelineScreen"></property>
+	</bean>
+	
+	<bean id="world" class="org.wm.timebox.app.ui.world.World">
+		<constructor-arg index="0" value="800"></constructor-arg>
+		<constructor-arg index="1" value="600"></constructor-arg>
+	</bean>
+	
 	<!-- MVC -->
 	<bean id="activity" class="org.wm.timebox.app.screen.mvc.ApplicationActivity" abstract="true" init-method="init"></bean>
 	
@@ -17,16 +29,41 @@
 		<property name="headerPanel" ref="headerPanel"></property>
 	</bean>
 	
-	<bean id="controller" class="org.wm.timebox.app.screen.mvc.Controller" abstract="true"></bean>
+	<bean id="controller" class="org.wm.timebox.app.screen.mvc.Controller" abstract="true">
+		<property name="timeboxModel" ref="timeboxModel"></property>
+	</bean>
+	
+	<bean id="timeboxModel" class="org.wm.timebox.app.model.TimeboxModel"/>
 
 	<!-- DAO / Services -->
-
+	<bean id="timeboxDAOService" class="org.wm.timebox.service.TimeboxDAOServiceImpl">
+	</bean>
+	
+	<!-- post-processors for all standard config annotations, incl. JPA -->
+  	<context:annotation-config/>
+	
 	<!-- Persistence -->	
+	
 	<bean
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
-	<bean id="timelineDAOService" class="org.wm.timebox.service.TimeboxDAOServiceImpl">
+	
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="persistenceUnitName" value="Timebox" />
+		<property name="loadTimeWeaver">
+			<bean
+				class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />
+		</property>
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="showSql" value="true" />
+				<property name="generateDdl" value="true" />
+			</bean>
+		</property>
 	</bean>
+	
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />

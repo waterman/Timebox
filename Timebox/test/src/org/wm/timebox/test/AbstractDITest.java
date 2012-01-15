@@ -15,4 +15,10 @@ public class AbstractDITest {
 		T tempBean = BeanProvider.getBean(aName);
 		return tempBean;
 	}
+	
+	protected <T> T getBean(Class<T> aClass){
+		StringBuilder tempBuilder = new StringBuilder(aClass.getSimpleName());
+		tempBuilder.setCharAt(0, Character.toLowerCase(tempBuilder.charAt(0)));
+		return getBean(tempBuilder.toString());
+	}
 }

@@ -3,5 +3,6 @@
     <wb-module deploy-name="Timebox">
         <wb-resource deploy-path="/" source-path="/src"/>
         <wb-resource deploy-path="/" source-path="/test/src"/>
+        <wb-resource deploy-path="/" source-path="/tools/src"/>
     </wb-module>
 </project-modules>

@@ -1,13 +1,15 @@
 package org.wm.timebox.app.bo;
 
-import java.util.Date;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Type;
+import org.joda.time.Duration;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
 @Entity
 public class Activity {
@@ -22,13 +24,15 @@ public class Activity {
 	@GeneratedValue(generator = "globalId")
 	private Long id;
 
-	@Temporal(TemporalType.TIME)
-	private Date start;
-
-	@Temporal(TemporalType.TIME)
-	private Date end;
-
-	private Integer pauseInMinutes;
+	@Column(nullable = false)
+	@Type(type = UserType.LOCAL_DATE)
+	private LocalDate date;
+	@Type(type = UserType.LOCAL_TIME)
+	private LocalTime start;
+	@Type(type = UserType.LOCAL_TIME)
+	private LocalTime end;
+	@Type(type = UserType.DURATION)
+	private Duration pauseInMinutes;
 
 	private String summary;
 
@@ -40,27 +44,11 @@ public class Activity {
 		id = aId;
 	}
 
-	public Date getStart() {
-		return start;
-	}
-
-	public void setStart(Date aFrom) {
-		start = aFrom;
-	}
-
-	public Date getEnd() {
-		return end;
-	}
-
-	public void setEnd(Date aUntil) {
-		end = aUntil;
-	}
-
-	public Integer getPauseInMinutes() {
+	public Duration getPauseInMinutes() {
 		return pauseInMinutes;
 	}
 
-	public void setPauseInMinutes(Integer aPauseInMinutes) {
+	public void setPauseInMinutes(Duration aPauseInMinutes) {
 		pauseInMinutes = aPauseInMinutes;
 	}
 
@@ -86,6 +74,30 @@ public class Activity {
 
 	public void setProject(Project project) {
 		this.project = project;
+	}
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate aDate) {
+		date = aDate;
+	}
+
+	public LocalTime getStart() {
+		return start;
+	}
+
+	public void setStart(LocalTime aStart) {
+		start = aStart;
+	}
+
+	public LocalTime getEnd() {
+		return end;
+	}
+
+	public void setEnd(LocalTime aEnd) {
+		end = aEnd;
 	}
 
 }

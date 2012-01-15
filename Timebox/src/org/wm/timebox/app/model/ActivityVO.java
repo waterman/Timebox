@@ -3,10 +3,21 @@ package org.wm.timebox.app.model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class TimelineItemVO {
+import org.wm.timebox.app.bo.Activity;
+
+public class ActivityVO {
 
 	private StringProperty start = new SimpleStringProperty();
 	private StringProperty end = new SimpleStringProperty();
+
+	public ActivityVO() {
+		super();
+	}
+
+	public ActivityVO(Activity aActivity) {
+		setStart(aActivity.getStart() == null ? null : aActivity.getStart().toString());
+		setEnd(aActivity.getEnd() == null ? null : aActivity.getEnd().toString());
+	}
 
 	public String getStart() {
 		return start.get();
